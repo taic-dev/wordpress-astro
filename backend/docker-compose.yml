@@ -7,10 +7,10 @@ services:
       - db_data:/var/lib/mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: somewordpress-astro
-      MYSQL_DATABASE: wordpress-astro
-      MYSQL_USER: wordpress-astro
-      MYSQL_PASSWORD: wordpress-astro
+      MYSQL_ROOT_PASSWORD: somewordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
 
   wordpress:
     depends_on:
@@ -23,7 +23,7 @@ services:
     restart: always
     environment:
       WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_USER: wordpress-astro
-      WORDPRESS_DB_PASSWORD: wordpress-astro
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
 volumes:
   db_data:
