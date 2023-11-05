@@ -1,6 +1,44 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
+import { wpQuery } from '../data/wpQuery'
+
+interface PostData {
+	id: number,
+	title: string,
+	date: string,
+	content: string
+	featuredImage: {
+		node: { mediaItemUrl: string }
+	}
+}
+
+const res = await fetch("https://dog.ceo/api/breeds/image/random")
+const image = await res.json()
+
+const data = await wpQuery({
+	query: `
+	query LoadAllPostsExcerpts {
+		posts {
+			nodes {
+				content
+				id
+				title
+				date
+				uri
+				postId
+				featuredImage {
+					node {
+						mediaItemUrl
+					}
+				}
+			}
+		}
+	}
+	`
+})
+
+const postList = data.posts.nodes;
 ---
 
 <Layout title="Welcome to Astro.">
@@ -38,27 +76,17 @@ import Card from '../components/Card.astro';
 			To get started, open the directory <code>src/pages</code> in your project.<br />
 			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
 		</p>
+		<img src={image.message} alt="">
 		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
+			{postList.map((data: PostData) => (
+				<Card
+					href="https://docs.astro.build/"
+					title={data.title}
+					date={data.date}
+					body={data.content}
+					img={data.featuredImage && data.featuredImage.node.mediaItemUrl}
+				/>
+			))}
 		</ul>
 	</main>
 </Layout>
@@ -121,3 +149,7 @@ import Card from '../components/Card.astro';
 		padding: 0;
 	}
 </style>
+
+<script>
+
+</script>
