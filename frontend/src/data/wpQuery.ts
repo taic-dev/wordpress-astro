@@ -4,7 +4,7 @@ interface WPGraphQLParams {
 }
 
 export async function wpQuery({ query, variables = {} }: WPGraphQLParams) {
-  const res = await fetch('http://localhost:8000/graphql', {
+  const res = await fetch(`${import.meta.env.PUBLIC_API_URL}`, {
     method: "post",
     headers: {
       'Content-Type': 'application/json'
