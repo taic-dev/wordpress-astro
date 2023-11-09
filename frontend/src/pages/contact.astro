@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro"
-import { Form } from "../components/React/Form.tsx"
+import { Form } from "../components/React/Contact/Form.tsx"
 ---
 
 <Layout title="Contact">
@@ -35,7 +35,7 @@ import { Form } from "../components/React/Form.tsx"
   </svg>
   <h1>Contact</h1>
   <div class="form">
-    <Form/>
+    <Form client:only="react"/>
   </div>
   </main>
 </Layout>
@@ -103,4 +103,4 @@ import { Form } from "../components/React/Form.tsx"
     border-radius: 15px;
     padding: 30px;
   }
-</style>
+</style>../components/React/Contact/Form.tsx
